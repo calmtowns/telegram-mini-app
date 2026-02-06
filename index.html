@@ -22,17 +22,56 @@
     <br>— заказать резюме
   </p>
 
-  <button style="
-    padding: 12px 20px;
-    font-size: 16px;
-    background: #2ea6ff;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-  ">
-    Найти ментора
-  </button>
+  <hr style="margin: 20px 0;">
+
+  <h3>Оставить заявку</h3>
+
+  <form id="mentorForm">
+    <input 
+      type="text" 
+      placeholder="Ваше имя" 
+      required
+      style="width: 100%; padding: 10px; margin-bottom: 10px;"
+    >
+
+    <input 
+      type="text" 
+      placeholder="Ваш Telegram (@username)" 
+      required
+      style="width: 100%; padding: 10px; margin-bottom: 10px;"
+    >
+
+    <button 
+      type="submit"
+      style="
+        width: 100%;
+        padding: 12px;
+        font-size: 16px;
+        background: #2ea6ff;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+      "
+    >
+      Отправить заявку
+    </button>
+  </form>
+
+  <p id="success" style="display:none; color: green; margin-top: 15px;">
+    Заявка отправлена. Мы свяжемся с вами.
+  </p>
+
+  <script>
+    const form = document.getElementById('mentorForm');
+    const success = document.getElementById('success');
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      form.style.display = 'none';
+      success.style.display = 'block';
+    });
+  </script>
 
 </body>
 </html>
