@@ -2,97 +2,111 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <title>Mentor Finder</title>
+  <title>Начать</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </head>
 
 <body style="
+  background:#0f172a;
+  color:#e5e7eb;
   font-family: Arial, sans-serif;
-  padding: 20px;
-  background: #0f172a;
-  color: #e5e7eb;
+  padding:20px;
 ">
 
-  <h2 style="color: #f8fafc;">Поиск менторов</h2>
+<h2 style="margin-top:0;">Начать</h2>
 
-  <p style="color: #cbd5f5;">
-    Это Telegram Mini App для поиска менторов
-    в сфере IT и фриланса.
-  </p>
+<p style="color:#cbd5f5; line-height:1.6;">
+Здесь можно начать диалог со мной и разобраться:
+<br>— нужен ли вам ментор
+<br>— формат консультации
+<br>— помощь с резюме
+</p>
 
-  <p style="color: #cbd5f5;">
-    Здесь вы сможете:
-    <br>— найти ментора  
-    <br>— получить консультацию  
-    <br>— заказать резюме
-  </p>
+<hr style="border-color:#334155; margin:20px 0;">
 
-  <hr style="margin: 20px 0; border-color: #334155;">
+<form id="form">
 
-  <h3 style="color: #f8fafc;">Оставить заявку</h3>
+  <input
+    id="name"
+    placeholder="Ваше имя"
+    required
+    style="
+      width:100%;
+      padding:10px;
+      margin-bottom:10px;
+      background:#020617;
+      border:1px solid #334155;
+      color:#e5e7eb;
+      border-radius:8px;
+    "
+  >
 
-  <form id="mentorForm">
-    <input 
-      type="text"
-      placeholder="Ваше имя"
-      required
-      style="
-        width: 100%;
-        padding: 10px;
-        margin-bottom: 10px;
-        background: #020617;
-        border: 1px solid #334155;
-        color: #e5e7eb;
-        border-radius: 6px;
-      "
-    >
+  <select
+    id="type"
+    style="
+      width:100%;
+      padding:10px;
+      margin-bottom:14px;
+      background:#020617;
+      border:1px solid #334155;
+      color:#e5e7eb;
+      border-radius:8px;
+    "
+  >
+    <option>Подбор ментора</option>
+    <option>Консультация</option>
+    <option>Резюме</option>
+  </select>
 
-    <input 
-      type="text"
-      placeholder="Ваш Telegram (@username)"
-      required
-      style="
-        width: 100%;
-        padding: 10px;
-        margin-bottom: 10px;
-        background: #020617;
-        border: 1px solid #334155;
-        color: #e5e7eb;
-        border-radius: 6px;
-      "
-    >
+  <button
+    type="submit"
+    style="
+      width:100%;
+      padding:12px;
+      font-size:16px;
+      background:#6366f1;
+      color:white;
+      border:none;
+      border-radius:10px;
+      cursor:pointer;
+    "
+  >
+    Начать диалог
+  </button>
 
-    <button 
-      type="submit"
-      style="
-        width: 100%;
-        padding: 12px;
-        font-size: 16px;
-        background: #6366f1;
-        color: white;
-        border: none;
-        border-radius: 8px;
-        cursor: pointer;
-      "
-    >
-      Отправить заявку
-    </button>
-  </form>
+</form>
 
-  <p id="success" style="display:none; color: #22c55e; margin-top: 15px;">
-    Заявка отправлена. Мы свяжемся с вами.
-  </p>
+<p style="margin-top:12px;color:#94a3b8;">
+После нажатия откроется чат со мной в Telegram.
+</p>
 
-  <script>
-    const form = document.getElementById('mentorForm');
-    const success = document.getElementById('success');
+<script>
+const OWNER = "Grader_vi"; // твой username БЕЗ @
 
-    form.addEventListener('submit', function(e) {
-      e.preventDefault();
-      form.style.display = 'none';
-      success.style.display = 'block';
-    });
-  </script>
+document.getElementById("form").onsubmit = function(e) {
+  e.preventDefault();
+
+  const name = document.getElementById("name").value;
+  const type = document.getElementById("type").value;
+
+  const message =
+`Новая заявка
+
+Запрос: ${type}
+Имя: ${name}
+
+Начинаем диалог.`;
+
+  const url = "https://t.me/" + OWNER + "?text=" + encodeURIComponent(message);
+
+  if (window.Telegram?.WebApp?.openTelegramLink) {
+    Telegram.WebApp.openTelegramLink(url);
+  } else {
+    window.open(url, "_blank");
+  }
+};
+</script>
 
 </body>
 </html>
