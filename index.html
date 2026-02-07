@@ -84,6 +84,26 @@
 <script>
 const OWNER = "Grader_vi"; // твой username БЕЗ @
 
+// 1) Автоподстановка из Telegram
+let autoContact = "";
+try {
+  const tg = window.Telegram?.WebApp;
+  if (tg) {
+    tg.ready();
+    const user = tg.initDataUnsafe?.user;
+
+    // имя подставим в поле
+    if (user?.first_name) {
+      const nameEl = document.getElementById("name");
+      if (nameEl && !nameEl.value) nameEl.value = user.first_name;
+    }
+
+    // контакт для заявки
+    if (user?.username) autoContact = "@" + user.username;
+    else if (user?.id) autoContact = "TG ID: " + user.id;
+  }
+} catch (e) {}
+
 document.getElementById("form").onsubmit = function(e) {
   e.preventDefault();
 
@@ -95,6 +115,7 @@ document.getElementById("form").onsubmit = function(e) {
 
 Запрос: ${type}
 Имя: ${name}
+Контакт: ${autoContact || "не определён"}
 
 Начинаем диалог.`;
 
